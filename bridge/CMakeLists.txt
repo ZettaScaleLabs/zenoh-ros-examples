@@ -1,3 +1,9 @@
+#
+# Copyright (c) 2025 ZettaScale Technology
+# All rights reserved.
+#
+# This software is the confidential and proprietary information of ZettaScale Technology.
+#
 cmake_minimum_required(VERSION 3.16)
 project(zenoh_ros_bridge_cpp_example
         DESCRIPTION "C++ Examples for Zenoh ROS Bridge"

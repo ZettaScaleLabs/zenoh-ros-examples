@@ -1,3 +1,9 @@
+//
+// Copyright (c) 2025 ZettaScale Technology
+// All rights reserved.
+//
+// This software is the confidential and proprietary information of ZettaScale Technology.
+//
 #include <iostream>
 
 #include "zenoh.hxx"
