@@ -1,5 +1,11 @@
 # zenoh-ros-examples
 
+Examples to subscribe ROS 2 data with Zenoh, including:
+
+* `/tf`: [tf2_msgs/msg/TFMessage](https://github.com/ros2/geometry2/blob/rolling/tf2_msgs/msg/TFMessage.msg)
+* `/tf_static`: [tf2_msgs/msg/TFMessage](https://github.com/ros2/geometry2/blob/rolling/tf2_msgs/msg/TFMessage.msg)
+* `/point_cloud`: [sensor_msgs/msg/PointCloud2](https://github.com/ros2/common_interfaces/blob/rolling/sensor_msgs/msg/PointCloud2.msg)
+
 ## Prerequisite
 
 * Install zenoh-c, zenoh-cpp and zenoh-plugin-ros2dds
