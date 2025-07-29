@@ -10,6 +10,8 @@
 
 #include "zenoh.hxx"
 
+#include "PointCloud2.h"
+
 using namespace zenoh;
 using namespace std::chrono_literals;
 

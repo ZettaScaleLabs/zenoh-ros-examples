@@ -1,0 +1,26 @@
+#ifndef __sensor_msgs_msg_PointCloud2__ 
+#define __sensor_msgs_msg_PointCloud2__ 
+ 
+#include "Header.idl" 
+#include "PointField.idl" 
+ 
+module sensor_msgs
+{
+  module msg
+  { 
+    struct PointCloud2
+    { 
+      std_msgs::msg::Header header; 
+      unsigned long height; 
+      unsigned long width; 
+      sequence<sensor_msgs::msg::PointField> fields; 
+      boolean is_bigendian; 
+      unsigned long point_step; 
+      unsigned long row_step; 
+      sequence<octet> data; 
+      boolean is_dense; 
+    }; 
+  };
+};
+ 
+#endif  /* __sensor_msgs_msg_PointCloud2__ */

@@ -1,0 +1,27 @@
+#ifndef __sensor_msgs_msg_PointField__
+#define __sensor_msgs_msg_PointField__
+ 
+module sensor_msgs
+{
+  module msg
+  { 
+    const octet PointField_INT8    = 1; 
+    const octet PointField_UINT8   = 2; 
+    const octet PointField_INT16   = 3; 
+    const octet PointField_UINT16  = 4; 
+    const octet PointField_INT32   = 5; 
+    const octet PointField_UINT32  = 6; 
+    const octet PointField_FLOAT32 = 7; 
+    const octet PointField_FLOAT64 = 8; 
+     
+    struct PointField
+    {
+        string name; 
+        unsigned long offset; 
+        octet datatype; 
+        unsigned long count; 
+    }; 
+  };
+};
+ 
+#endif  /* __sensor_msgs_msg_PointField__ */ 
