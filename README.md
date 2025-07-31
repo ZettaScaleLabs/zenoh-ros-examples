@@ -8,6 +8,8 @@ Examples to subscribe ROS 2 data with Zenoh, including:
 
 ## Prerequisite
 
+The following tutorial to install packages via apt, but you can also build them manually by yourselves.
+
 * Install zenoh-c, zenoh-cpp and zenoh-plugin-ros2dds
 
 ```bash
@@ -20,4 +22,13 @@ sudo apt install libzenohc-dev libzenohcpp-dev zenoh-plugin-ros2dds
 
 ```bash
 sudo apt install ros-jazzy-rmw-zenoh-cpp
+```
+
+## Build the project
+
+We are using [just](https://github.com/casey/just) to simplify the command.
+You can install it via `sudo apt install just`.
+
+```bash
+just all
 ```
