@@ -29,6 +29,14 @@ sudo apt install ros-jazzy-rmw-zenoh-cpp
 We are using [just](https://github.com/casey/just) to simplify the command.
 You can install it via `sudo apt install just`.
 
+* Build the whole project
+
 ```bash
 just all
+```
+
+* Clean the whole project
+
+```bash
+just clean
 ```

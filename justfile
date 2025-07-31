@@ -21,3 +21,8 @@ zenoh-bridge-examples:
 	cd bridge/build && \
 		cmake -DCMAKE_PREFIX_PATH=../cyclonedds/install .. && \
 		cmake --build .
+
+# Clean the build folder
+clean:
+	rm -rf build
+	rm -rf cyclonedds/build
