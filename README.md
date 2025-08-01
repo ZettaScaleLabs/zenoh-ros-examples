@@ -10,12 +10,12 @@ Examples to subscribe ROS 2 data with Zenoh, including:
 
 The following tutorial to install packages via apt, but you can also build them manually by yourselves.
 
-* Install zenoh-c, zenoh-cpp and zenoh-plugin-ros2dds
+* Install zenoh-c, zenoh-cpp and zenoh-bridge-ros2dds
 
 ```bash
 echo "deb [trusted=yes] https://download.eclipse.org/zenoh/debian-repo/ /" | sudo tee -a /etc/apt/sources.list > /dev/null
 sudo apt update
-sudo apt install libzenohc-dev libzenohcpp-dev zenoh-plugin-ros2dds
+sudo apt install libzenohc-dev libzenohcpp-dev zenoh-bridge-ros2dds
 ```
 
 * Install rmw_zenoh
@@ -33,10 +33,38 @@ You can install it via `sudo apt install just`.
 
 ```bash
 just all
+# Option: You can build the project step by step
+just cyclonedds
+just cyclonedds-cxx
+just zenoh-bridge-examples
 ```
 
 * Clean the whole project
 
 ```bash
 just clean
+```
+
+## Usage
+
+### zenoh-bridge-ros2dds
+
+* Run your ROS 2 program with CycloneDDS
+
+```bash
+export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
+# Your ROS 2 program
+```
+
+* Run the zenoh-bridge-ros2dds
+
+```bash
+export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
+zenoh-bridge-ros2dds
+```
+
+* Run the subscriber
+
+```bash
+./bridge/build/zenoh_sub
 ```
