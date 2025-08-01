@@ -1,0 +1,20 @@
+#ifndef __geometry_msgs_msg_TransformStamped__
+#define __geometry_msgs_msg_TransformStamped__
+
+#include "Header.idl" 
+#include "Transform.idl"
+
+module geometry_msgs
+{
+  module msg
+  { 
+    struct TransformStamped
+    {
+      std_msgs::msg::Header header;
+      string child_frame_id;
+      geometry_msgs::msg::Transform transform;
+    }; 
+  }; 
+};
+
+#endif /* __geometry_msgs_msg_TransformStamped__ */

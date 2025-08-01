@@ -13,6 +13,7 @@
 
 // Include the message types you need
 #include "PointCloud2.hpp"
+#include "TFMessage.hpp"
 
 using namespace zenoh;
 using namespace std::chrono_literals;
@@ -33,8 +34,31 @@ int main(int argc, char **argv)
     // Subscribe to /tf
     KeyExpr tf_keyexpr(ROS_TOPIC_TF);
     auto tf_handler = [](const Sample &sample) {
-        std::cout << ">> [TF Subscriber] Received" << std::endl;
-        // TODO(CY): Deserialize the TF message and process it
+        std::cout << ">> [TF Subscriber] Zenoh key: " << sample.get_keyexpr().as_string_view() << ", Size: " << sample.get_payload().size() << std::endl;
+
+        // Deserialize the CDR payload
+        tf2_msgs::msg::TFMessage tf_msg;
+        basic_cdr_stream stream;
+        // Get the payload and set the buffer for the stream
+        auto buffer = sample.get_payload().as_vector();
+        stream.set_buffer(buffer.data() + 4, buffer.size());
+        // Read the TFMessage from the stream
+        read(stream, tf_msg, key_mode::not_key);
+
+        // Print some information about the TFMessage
+        std::cout << "   Number of transforms: " << tf_msg.transforms().size() << std::endl;
+        for (const auto &transform : tf_msg.transforms()) {
+            std::cout << "   Transform: " << transform.header().stamp() << ", Child Frame ID: " << transform.child_frame_id() << std::endl;
+            std::cout << "   Translation: (" 
+                      << transform.transform().translation().x() << ", "
+                      << transform.transform().translation().y() << ", "
+                      << transform.transform().translation().z() << ")" << std::endl;
+            std::cout << "   Rotation: (" 
+                      << transform.transform().rotation().x() << ", "
+                      << transform.transform().rotation().y() << ", "
+                      << transform.transform().rotation().z() << ", "
+                      << transform.transform().rotation().w() << ")" << std::endl;
+        }
     }; 
     auto tf_subscriber = session.declare_subscriber(tf_keyexpr, tf_handler, closures::none);
 

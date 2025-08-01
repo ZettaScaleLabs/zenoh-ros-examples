@@ -1,0 +1,19 @@
+#ifndef __geometry_msgs_msg_Transform__
+#define __geometry_msgs_msg_Transform__
+
+#include "Quaternion.idl"
+#include "Vector3.idl"
+
+module geometry_msgs
+{
+  module msg
+  { 
+    struct Transform
+    {
+      geometry_msgs::msg::Vector3 translation;
+      geometry_msgs::msg::Quaternion rotation;
+    }; 
+  }; 
+};
+
+#endif /* __geometry_msgs_msg_Transform__ */

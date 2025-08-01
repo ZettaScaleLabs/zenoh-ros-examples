@@ -1,0 +1,18 @@
+#ifndef __geometry_msgs_msg_Quaternion__
+#define __geometry_msgs_msg_Quaternion__
+
+module geometry_msgs
+{
+  module msg
+  { 
+    struct Quaternion
+    { 
+      double x; 
+      double y; 
+      double z;
+      double w; 
+    }; 
+  }; 
+};
+
+#endif /* __geometry_msgs_msg_Quaternion__ */

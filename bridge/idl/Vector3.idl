@@ -1,0 +1,17 @@
+#ifndef __geometry_msgs_msg_Vector3__
+#define __geometry_msgs_msg_Vector3__
+
+module geometry_msgs
+{
+  module msg
+  { 
+    struct Vector3
+    { 
+      double x; 
+      double y; 
+      double z; 
+    }; 
+  }; 
+};
+
+#endif /* __geometry_msgs_msg_Vector3__ */
