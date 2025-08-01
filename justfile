@@ -1,4 +1,4 @@
-all: prepare cyclonedds zenoh-bridge-examples
+all: prepare cyclonedds cyclonedds-cxx zenoh-bridge-examples
 
 # Initialize git submodules
 prepare:
@@ -7,9 +7,18 @@ prepare:
 
 # Build the CycloneDDS library
 cyclonedds:
-	mkdir -p cyclonedds/build cyclonedds/install
+	mkdir -p install
+	mkdir -p cyclonedds/build
 	cd cyclonedds/build && \
-		cmake -DCMAKE_INSTALL_PREFIX=../install .. && \
+		cmake -DCMAKE_INSTALL_PREFIX=../../install .. && \
+		cmake --build . && \
+		cmake --build . --target install
+	
+# Build the CycloneDDS C++ library
+cyclonedds-cxx: cyclonedds
+	mkdir -p cyclonedds-cxx/build
+	cd cyclonedds-cxx/build && \
+		cmake -DCMAKE_INSTALL_PREFIX=../../install -DCMAKE_PREFIX_PATH=../install .. && \
 		cmake --build . && \
 		cmake --build . --target install
 
@@ -19,10 +28,13 @@ zenoh-bridge-examples:
 	# Use the idlc we built
 	export PATH=$(pwd)/cyclonedds/install/bin:$PATH && \
 	cd bridge/build && \
-		cmake -DCMAKE_PREFIX_PATH=../cyclonedds/install .. && \
+		cmake -DCMAKE_PREFIX_PATH=../install .. && \
 		cmake --build .
 
 # Clean the build folder
 clean:
-	rm -rf build
+	rm -rf bridge/build
 	rm -rf cyclonedds/build
+	rm -rf cyclonedds-cxx/build
+	rm -rf install
+	

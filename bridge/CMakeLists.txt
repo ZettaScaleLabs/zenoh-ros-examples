@@ -20,12 +20,12 @@ find_program(IDLC idlc)
 message(STATUS, "IDLC: ${IDLC}")
 
 # IDL code generation
-find_package(CycloneDDS REQUIRED)
+find_package(CycloneDDS-CXX REQUIRED)
 file(GLOB IDL_FILES idl/*.idl)
 message(STATUS "IDL files found: ${IDL_FILES}")
-idlc_generate(TARGET IdlGenerated_lib FILES ${IDL_FILES} WARNINGS no-implicit-extensibility)
+idlcxx_generate(TARGET IdlGenerated_lib FILES ${IDL_FILES} WARNINGS no-implicit-extensibility)
 include_directories(${CMAKE_BINARY_DIR})
 
 # Build
-add_executable(zenoh_sub zenoh_sub.cxx PointCloud2.c Header.c PointField.c Time.c)
-target_link_libraries(zenoh_sub PRIVATE zenohc::lib zenohcxx::zenohc CycloneDDS::ddsc)
+add_executable(zenoh_sub zenoh_sub.cxx)
+target_link_libraries(zenoh_sub PRIVATE zenohc::lib zenohcxx::zenohc CycloneDDS-CXX::ddscxx IdlGenerated_lib)
