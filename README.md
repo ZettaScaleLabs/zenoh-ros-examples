@@ -47,20 +47,23 @@ just clean
 
 ## Usage
 
-### zenoh-bridge-ros2dds
+### Subscribe messages from zenoh-bridge-ros2dds
 
 * Run your ROS 2 program with CycloneDDS
 
 ```bash
+source /opt/ros/jazzy/setup.bash
 export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
 # Your ROS 2 program
 ```
 
 * Run the zenoh-bridge-ros2dds
+  * Note that you can run with the configuration that filters unnecessary topics.
 
 ```bash
+source /opt/ros/jazzy/setup.bash
 export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
-zenoh-bridge-ros2dds
+zenoh-bridge-ros2dds -c bridge/config/bridge-config.json5
 ```
 
 * Run the subscriber
