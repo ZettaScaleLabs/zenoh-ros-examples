@@ -20,9 +20,9 @@ using namespace std::chrono_literals;
 // The topic name we will use
 #define ROS_TOPIC_TF          "tf"
 #define ROS_TOPIC_TF_STATIC   "tf_static"
-//#define ROS_TOPIC_POINT_CLOUD "point_cloud"
+#define ROS_TOPIC_POINT_CLOUD "point_cloud"
 // The point cloud topic which is used in the turtlebot demo
-#define ROS_TOPIC_POINT_CLOUD "intel_realsense_r200_depth/points"
+//#define ROS_TOPIC_POINT_CLOUD "local_costmap/clearing_endpoints"
 
 int main(int argc, char **argv)
 {
