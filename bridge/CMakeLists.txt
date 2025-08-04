@@ -10,6 +10,7 @@ project(zenoh_ros_bridge_cpp_example
         VERSION 0.1.0
         LANGUAGES CXX)
 
+# Add Zenoh libraries
 find_package(zenohc REQUIRED)
 find_package(zenohcxx REQUIRED)
 

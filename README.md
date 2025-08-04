@@ -34,9 +34,10 @@ You can install it via `sudo apt install just`.
 ```bash
 just all
 # Option: You can build the project step by step
-just cyclonedds
-just cyclonedds-cxx
-just zenoh-bridge-examples
+just prepare               # Init submodule
+just cyclonedds            # Install CycloneDDS
+just cyclonedds-cxx        # Install CycloneDDS C++
+just zenoh-bridge-examples # Build the bridge example
 ```
 
 * Clean the whole project
