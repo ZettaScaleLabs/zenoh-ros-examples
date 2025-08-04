@@ -21,7 +21,7 @@ message(STATUS, "IDLC: ${IDLC}")
 
 # IDL code generation
 find_package(CycloneDDS-CXX REQUIRED)
-file(GLOB IDL_FILES idl/*.idl)
+file(GLOB IDL_FILES ../idl/*.idl)
 message(STATUS "IDL files found: ${IDL_FILES}")
 idlcxx_generate(TARGET IdlGenerated_lib FILES ${IDL_FILES} WARNINGS no-implicit-extensibility)
 include_directories(${CMAKE_BINARY_DIR})

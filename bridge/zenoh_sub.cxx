@@ -12,7 +12,6 @@
 #include <zenoh.hxx>
 
 // Include the message types you need
-// TODO(CY): Move the IDL folder out
 #include "PointCloud2.hpp"
 #include "TFMessage.hpp"
 
