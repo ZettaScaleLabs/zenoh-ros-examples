@@ -1,0 +1,12 @@
+{
+  /// The node's mode (router, peer or client)
+  mode: "peer",
+  connect: {
+    endpoints: [
+      "tcp/127.0.0.1:7447", // Router endpoint
+    ],
+  },
+  // listen: {
+  //   endpoints: { router: ["tcp/[::]:7447"], peer: ["tcp/[::]:0"] },
+  // }
+}

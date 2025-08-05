@@ -18,18 +18,29 @@
 using namespace std::chrono_literals;
 
 // The topic name we will use
-#define ROS_TOPIC_TF          "tf"
-#define ROS_TOPIC_TF_STATIC   "tf_static"
-#define ROS_TOPIC_POINT_CLOUD "point_cloud"
+// In rmw_zenoh, the format of the topic is 
+//   "<domain_id>/<fully_qualified_name>/<type_name>/<type_hash>"
+// Please refer to the rmw_zenoh documentation for more details.
+// https://github.com/ros2/rmw_zenoh/blob/rolling/docs/design.md#topic-and-service-name-mapping-to-zenoh-key-expressions
+#define ROS_TOPIC_TF          "*/tf/*/*"
+// TODO(CY): Unable to subscribe transient_local topic
+#define ROS_TOPIC_TF_STATIC   "*/tf_static/*/*"
+#define ROS_TOPIC_POINT_CLOUD "*/point_cloud/*/*"
 // The point cloud topic which is used in the turtlebot demo
-//#define ROS_TOPIC_POINT_CLOUD "local_costmap/clearing_endpoints"
+//#define ROS_TOPIC_POINT_CLOUD "*/local_costmap/clearing_endpoints/*/*"
+//#define ROS_TOPIC_POINT_CLOUD "*/intel_realsense_r200_depth_driver/*/*"
 
 int main(int argc, char **argv)
 {
-    std::cout << "Zenoh Bridge Subscriber Example" << std::endl;
+    std::cout << "Zenoh RMW Subscriber Example" << std::endl;
 
     // Initialize Zenoh session with a default configuration
     zenoh::Config config = zenoh::Config::create_default();
+    if (argc > 1) {
+        std::cout << "Using configuration file: " << argv[1] << std::endl;
+        // If a configuration file is provided, load it
+        config = zenoh::Config::from_file(std::string(argv[1]));
+    }
     auto session = zenoh::Session::open(std::move(config));
 
     // Subscribe to /tf
@@ -115,6 +126,8 @@ int main(int argc, char **argv)
                                             zenoh::closures::none,    // Drop callback which is not used
                                             std::move(adv_sub_opts)   // Advanced Subscriber configuration
                                          );
+
+    // TODO(CY): Declare a liveliness token for the detection.
 
     // Waiting for CTRL-C to exit
     std::cout << "Press CTRL-C to quit...\n";

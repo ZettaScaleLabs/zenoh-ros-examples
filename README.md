@@ -38,6 +38,7 @@ just prepare               # Init submodule
 just cyclonedds            # Install CycloneDDS
 just cyclonedds-cxx        # Install CycloneDDS C++
 just zenoh-bridge-examples # Build the bridge example
+just zenoh-rmw-examples    # Build the rmw zenoh example
 ```
 
 * Clean the whole project
@@ -71,4 +72,29 @@ zenoh-bridge-ros2dds -c bridge/config/bridge-config.json5
 
 ```bash
 ./bridge/build/zenoh_sub
+```
+
+### Subscribe messages from rmw_zenoh
+
+* Run Zenoh router
+
+```bash
+source /opt/ros/jazzy/setup.bash
+export RMW_IMPLEMENTATION=rmw_zenoh_cpp
+ros2 run rmw_zenoh_cpp rmw_zenohd
+```
+
+* Run your ROS 2 program with rmw_zenoh
+
+```bash
+source /opt/ros/jazzy/setup.bash
+export RMW_IMPLEMENTATION=rmw_zenoh_cpp
+# Your ROS 2 program
+```
+
+* Run the subscriber
+
+```bash
+# Accept the configuration that creates a connection to rmw_zenohd
+./rmw_zenoh/build/zenoh_sub ./rmw_zenoh/config/zenoh-config.json5
 ```
