@@ -17,6 +17,7 @@
 
 using namespace std::chrono_literals;
 
+// TODO(CY): Need to filter the topic in the configuration file.
 // The topic name we will use
 // In rmw_zenoh, the format of the topic is 
 //   "<domain_id>/<fully_qualified_name>/<type_name>/<type_hash>"
@@ -29,6 +30,8 @@ using namespace std::chrono_literals;
 // The point cloud topic which is used in the turtlebot demo
 //#define ROS_TOPIC_POINT_CLOUD "*/local_costmap/clearing_endpoints/*/*"
 //#define ROS_TOPIC_POINT_CLOUD "*/intel_realsense_r200_depth_driver/*/*"
+
+#define HISTORY_DEPTH 100
 
 int main(int argc, char **argv)
 {
@@ -118,7 +121,7 @@ int main(int argc, char **argv)
     adv_sub_opts.history = AdvancedSubscriberOptions::HistoryOptions::create_default();
     // Enable detection of late joiner publishers and query for their historical data.
     adv_sub_opts.history->detect_late_publishers = true;
-    adv_sub_opts.history->max_samples = 10;
+    adv_sub_opts.history->max_samples = HISTORY_DEPTH;
     zenoh::KeyExpr tf_static_keyexpr(ROS_TOPIC_TF_STATIC);
     auto tf_querying_sub = session.ext().declare_advanced_subscriber(
                                             tf_static_keyexpr,        // Point Cloud key expression

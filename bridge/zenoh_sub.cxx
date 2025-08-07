@@ -24,6 +24,8 @@ using namespace std::chrono_literals;
 // The point cloud topic which is used in the turtlebot demo
 //#define ROS_TOPIC_POINT_CLOUD "local_costmap/clearing_endpoints"
 
+#define HISTORY_DEPTH 100
+
 int main(int argc, char **argv)
 {
     std::cout << "Zenoh Bridge Subscriber Example" << std::endl;
@@ -107,7 +109,7 @@ int main(int argc, char **argv)
     adv_sub_opts.history = AdvancedSubscriberOptions::HistoryOptions::create_default();
     // Enable detection of late joiner publishers and query for their historical data.
     adv_sub_opts.history->detect_late_publishers = true;
-    adv_sub_opts.history->max_samples = 10;
+    adv_sub_opts.history->max_samples = HISTORY_DEPTH;
     zenoh::KeyExpr tf_static_keyexpr(ROS_TOPIC_TF_STATIC);
     auto tf_querying_sub = session.ext().declare_advanced_subscriber(
                                             tf_static_keyexpr,        // Point Cloud key expression
