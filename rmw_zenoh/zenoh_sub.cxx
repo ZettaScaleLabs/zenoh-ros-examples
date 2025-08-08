@@ -35,6 +35,9 @@ using namespace std::chrono_literals;
 
 int main(int argc, char **argv)
 {
+    // Initialize Zenoh logging
+    zenoh::init_log_from_env_or("error");
+
     std::cout << "Zenoh RMW Subscriber Example" << std::endl;
 
     // Initialize Zenoh session with a default configuration
