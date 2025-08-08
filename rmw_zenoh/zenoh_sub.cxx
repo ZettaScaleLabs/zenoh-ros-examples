@@ -24,10 +24,11 @@ using namespace std::chrono_literals;
 // Please refer to the rmw_zenoh documentation for more details.
 // https://github.com/ros2/rmw_zenoh/blob/rolling/docs/design.md#topic-and-service-name-mapping-to-zenoh-key-expressions
 #define ROS_TOPIC_TF          "*/tf/*/*"
-// TODO(CY): Unable to subscribe transient_local topic
 #define ROS_TOPIC_TF_STATIC   "*/tf_static/*/*"
+// TODO(CY): Why ROS 2 humble can't work?
 #define ROS_TOPIC_POINT_CLOUD "*/point_cloud/*/*"
 // The point cloud topic which is used in the turtlebot demo
+// TODO(CY): Why can't I keep receiving transient_local topic?
 //#define ROS_TOPIC_POINT_CLOUD "*/local_costmap/clearing_endpoints/*/*"
 //#define ROS_TOPIC_POINT_CLOUD "*/intel_realsense_r200_depth_driver/*/*"
 
@@ -125,6 +126,9 @@ int main(int argc, char **argv)
     // Enable detection of late joiner publishers and query for their historical data.
     adv_sub_opts.history->detect_late_publishers = true;
     adv_sub_opts.history->max_samples = HISTORY_DEPTH;
+    // Only needed if the topic is reliable.
+    adv_sub_opts.recovery.emplace().last_sample_miss_detection =
+      AdvancedSubscriberOptions::RecoveryOptions::Heartbeat{};
     zenoh::KeyExpr tf_static_keyexpr(ROS_TOPIC_TF_STATIC);
     auto tf_querying_sub = session.ext().declare_advanced_subscriber(
                                             tf_static_keyexpr,        // Point Cloud key expression
