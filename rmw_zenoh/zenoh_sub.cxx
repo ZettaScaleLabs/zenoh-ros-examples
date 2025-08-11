@@ -23,16 +23,28 @@ using namespace std::chrono_literals;
 //   "<domain_id>/<fully_qualified_name>/<type_name>/<type_hash>"
 // Please refer to the rmw_zenoh documentation for more details.
 // https://github.com/ros2/rmw_zenoh/blob/rolling/docs/design.md#topic-and-service-name-mapping-to-zenoh-key-expressions
+#define MANGLED_TF            "%tf"
 #define ROS_TOPIC_TF          "*/tf/*/*"
+#define MANGLED_TF_STATIC     "%tf_static"
 #define ROS_TOPIC_TF_STATIC   "*/tf_static/*/*"
 // TODO(CY): Why ROS 2 humble can't work?
+#define MANGLED_POINT_CLOUD   "%point_cloud"
 #define ROS_TOPIC_POINT_CLOUD "*/point_cloud/*/*"
 // The point cloud topic which is used in the turtlebot demo
-// TODO(CY): Why can't I keep receiving transient_local topic?
+//#define MANGLED_POINT_CLOUD   "%local_costmap%clearing_endpoints"
 //#define ROS_TOPIC_POINT_CLOUD "*/local_costmap/clearing_endpoints/*/*"
+//#define MANGLED_POINT_CLOUD   "%intel_realsense_r200_depth_driver"
 //#define ROS_TOPIC_POINT_CLOUD "*/intel_realsense_r200_depth_driver/*/*"
 
+#define NODE_NAME "zenoh_sub"
+
 #define HISTORY_DEPTH 100
+
+int get_next_entities_id()
+{
+    static int id = 0;
+    return id++;
+}
 
 int main(int argc, char **argv)
 {
@@ -137,13 +149,52 @@ int main(int argc, char **argv)
                                             std::move(adv_sub_opts)   // Advanced Subscriber configuration
                                          );
 
-    // TODO(CY): Declare a liveliness token for the detection.
+    // Declare a liveliness token for the detection.
+    // The token format should follow the specification in rmw_zenoh.
+    //   https://github.com/ros2/rmw_zenoh/blob/rolling/docs/design.md#graph-cache
+    // Node liveliness token
+    int node_id = get_next_entities_id();
+    std::stringstream ss_node;
+    ss_node << "@ros2_lv/0/" << session.get_zid() << "/" << node_id << "/" << node_id 
+            << "/NN/%/%/" << NODE_NAME;
+    auto liveliness_token_node = session.liveliness_declare_token(
+      zenoh::KeyExpr(ss_node.str()),
+      zenoh::Session::LivelinessDeclarationOptions::create_default());
+    // TF liveliness token
+    std::stringstream ss_tf;
+    ss_tf << "@ros2_lv/0/" << session.get_zid() << "/" << node_id << "/" << get_next_entities_id()
+          << "/MS/%/%/" << NODE_NAME << "/" << MANGLED_TF << "/tf2_msgs::msg::dds_::TFMessage_/RIHS01_e369d0f05a23ae52508854b66f6aa0437f3449d652e8cbf22d5abe85d020f087/::,100:,:,:,,";
+    auto liveliness_token_tf = session.liveliness_declare_token(
+      zenoh::KeyExpr(ss_tf.str()),
+      zenoh::Session::LivelinessDeclarationOptions::create_default());
+    // TF static liveliness token
+    std::stringstream ss_tf_static;
+    ss_tf_static << "@ros2_lv/0/" << session.get_zid() << "/" << node_id << "/" << get_next_entities_id()
+                 << "/MS/%/%/" << NODE_NAME << "/" << MANGLED_TF_STATIC << "/tf2_msgs::msg::dds_::TFMessage_/RIHS01_e369d0f05a23ae52508854b66f6aa0437f3449d652e8cbf22d5abe85d020f087/:1:,1:,:,:,,";
+    auto liveliness_token_tf_static = session.liveliness_declare_token(
+      zenoh::KeyExpr(ss_tf_static.str()),
+      zenoh::Session::LivelinessDeclarationOptions::create_default());
+    // Point Cloud liveliness token
+    std::stringstream ss_point_cloud;
+    ss_point_cloud << "@ros2_lv/0/" << session.get_zid() << "/" << node_id << "/" << get_next_entities_id()
+                   << "/MS/%/%/" << NODE_NAME << "/" << MANGLED_POINT_CLOUD
+                   << "/sensor_msgs::msg::dds_::PointCloud2_/RIHS01_9198cabf7da3796ae6fe19c4cb3bdd3525492988c70522628af5daa124bae2b5/::,5:,:,:,,"; // Volatile, Keep last 5
+                   //<< "/sensor_msgs::msg::dds_::PointCloud2_/RIHS01_9198cabf7da3796ae6fe19c4cb3bdd3525492988c70522628af5daa124bae2b5/:1:,1:,:,:,,"; // Transient Local, Keep last 1
+    auto liveliness_token_point_cloud = session.liveliness_declare_token(
+      zenoh::KeyExpr(ss_point_cloud.str()),
+      zenoh::Session::LivelinessDeclarationOptions::create_default());
 
     // Waiting for CTRL-C to exit
     std::cout << "Press CTRL-C to quit...\n";
     while (true) {
         std::this_thread::sleep_for(1s);
     }
+
+    // Undeclare the liveliness token when exiting
+    std::move(liveliness_token_point_cloud).undeclare();
+    std::move(liveliness_token_tf_static).undeclare();
+    std::move(liveliness_token_tf).undeclare();
+    std::move(liveliness_token_node).undeclare();
 
     return 0;
 }
