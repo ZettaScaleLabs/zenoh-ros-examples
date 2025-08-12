@@ -36,10 +36,13 @@ using namespace std::chrono_literals;
 //#define MANGLED_POINT_CLOUD   "%intel_realsense_r200_depth_driver"
 //#define ROS_TOPIC_POINT_CLOUD "*/intel_realsense_r200_depth_driver/*/*"
 
+// The name that will be shown in ROS 2 node list
 #define NODE_NAME "zenoh_sub"
 
+// The history depth for the subscriber
 #define HISTORY_DEPTH 100
 
+// The function is to get the next unique ID for entities used in ROS 2.
 int get_next_entities_id()
 {
     static int id = 0;
@@ -152,6 +155,8 @@ int main(int argc, char **argv)
     // Declare a liveliness token for the detection.
     // The token format should follow the specification in rmw_zenoh.
     //   https://github.com/ros2/rmw_zenoh/blob/rolling/docs/design.md#graph-cache
+    // QoS settings for the liveliness token
+    //   https://github.com/ros2/rmw_zenoh/blob/cdb66eed88a41775e4d6b7a3919805d4963f606b/rmw_zenoh_cpp/src/detail/liveliness_utils.cpp#L239
     // Node liveliness token
     int node_id = get_next_entities_id();
     std::stringstream ss_node;
@@ -178,8 +183,8 @@ int main(int argc, char **argv)
     std::stringstream ss_point_cloud;
     ss_point_cloud << "@ros2_lv/0/" << session.get_zid() << "/" << node_id << "/" << get_next_entities_id()
                    << "/MS/%/%/" << NODE_NAME << "/" << MANGLED_POINT_CLOUD
-                   << "/sensor_msgs::msg::dds_::PointCloud2_/RIHS01_9198cabf7da3796ae6fe19c4cb3bdd3525492988c70522628af5daa124bae2b5/::,5:,:,:,,"; // Volatile, Keep last 5
-                   //<< "/sensor_msgs::msg::dds_::PointCloud2_/RIHS01_9198cabf7da3796ae6fe19c4cb3bdd3525492988c70522628af5daa124bae2b5/:1:,1:,:,:,,"; // Transient Local, Keep last 1
+                   << "/sensor_msgs::msg::dds_::PointCloud2_/RIHS01_9198cabf7da3796ae6fe19c4cb3bdd3525492988c70522628af5daa124bae2b5/::,5:,:,:,,";   // Volatile, Keep last 5
+                   //<< "/sensor_msgs::msg::dds_::PointCloud2_/RIHS01_9198cabf7da3796ae6fe19c4cb3bdd3525492988c70522628af5daa124bae2b5/:1:,1:,:,:,,";   // Transient Local, Keep last 1
     auto liveliness_token_point_cloud = session.liveliness_declare_token(
       zenoh::KeyExpr(ss_point_cloud.str()),
       zenoh::Session::LivelinessDeclarationOptions::create_default());
