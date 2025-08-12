@@ -18,10 +18,10 @@ sudo apt update
 sudo apt install libzenohc-dev libzenohcpp-dev zenoh-bridge-ros2dds
 ```
 
-* Install rmw_zenoh
+* Install rmw_zenoh_cpp and rmw_cyclonedds_cpp
 
 ```bash
-sudo apt install ros-jazzy-rmw-zenoh-cpp
+sudo apt install ros-jazzy-rmw-zenoh-cpp ros-jazzy-rmw-cyclonedds-cpp
 ```
 
 ## Build the project
@@ -30,6 +30,7 @@ We are using [just](https://github.com/casey/just) to simplify the command.
 You can install it via `sudo apt install just`.
 
 * Build the whole project
+  * **NOTE**: To avoid the potential conflict of CycloneDDS library, please **DON'T** build the example under the ROS environment (`source /opt/ros/jazzy/setup.bash`).
 
 ```bash
 just all
@@ -71,6 +72,7 @@ zenoh-bridge-ros2dds -c bridge/config/bridge-config.json5
 * Run the subscriber
 
 ```bash
+# DON'T source ROS environment in the terminal to avoid CycloneDDS library conflict
 ./bridge/build/zenoh_sub
 ```
 
@@ -93,10 +95,10 @@ export RMW_IMPLEMENTATION=rmw_zenoh_cpp
 ```
 
 * Run the subscriber
-  * You might need to update the connection of `rmw_zenohd` in the configuration file first.
+  * You might need to update the connection IP of `rmw_zenohd` in the configuration file first.
   * The path of the configuration file: `rmw_zenoh/config/zenoh-config.json5`
 
 ```bash
-# Accept the configuration that creates a connection to rmw_zenohd
+# DON'T source ROS environment in the terminal to avoid CycloneDDS library conflict
 ./rmw_zenoh/build/zenoh_sub ./rmw_zenoh/config/zenoh-config.json5
 ```
