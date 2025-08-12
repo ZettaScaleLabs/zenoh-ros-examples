@@ -17,7 +17,6 @@
 
 using namespace std::chrono_literals;
 
-// TODO(CY): Need to filter the topic in the configuration file.
 // The topic name we will use
 // In rmw_zenoh, the format of the topic is 
 //   "<domain_id>/<fully_qualified_name>/<type_name>/<type_hash>"
