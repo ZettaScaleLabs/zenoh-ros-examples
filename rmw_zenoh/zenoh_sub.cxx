@@ -26,14 +26,11 @@ using namespace std::chrono_literals;
 #define ROS_TOPIC_TF          "*/tf/*/*"
 #define MANGLED_TF_STATIC     "%tf_static"
 #define ROS_TOPIC_TF_STATIC   "*/tf_static/*/*"
-// TODO(CY): Why ROS 2 humble can't work?
 #define MANGLED_POINT_CLOUD   "%point_cloud"
 #define ROS_TOPIC_POINT_CLOUD "*/point_cloud/*/*"
 // The point cloud topic which is used in the turtlebot demo
 //#define MANGLED_POINT_CLOUD   "%local_costmap%clearing_endpoints"
 //#define ROS_TOPIC_POINT_CLOUD "*/local_costmap/clearing_endpoints/*/*"
-//#define MANGLED_POINT_CLOUD   "%intel_realsense_r200_depth_driver"
-//#define ROS_TOPIC_POINT_CLOUD "*/intel_realsense_r200_depth_driver/*/*"
 
 // The name that will be shown in ROS 2 node list
 #define NODE_NAME "zenoh_sub"
@@ -152,6 +149,7 @@ int main(int argc, char **argv)
                                          );
 
     // Declare a liveliness token for the detection.
+    // Note that this can only work in ROS 2 Jazzy while Humble has different liveliness token format.
     // The token format should follow the specification in rmw_zenoh.
     //   https://github.com/ros2/rmw_zenoh/blob/rolling/docs/design.md#graph-cache
     // QoS settings for the liveliness token
