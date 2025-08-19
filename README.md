@@ -85,7 +85,6 @@ just clean
 ### Using **`rmw_zenoh_cpp`**, subscribing directly
 
 * Run Zenoh router
-  * The configuration file for zenohd enables the ACL control.
 
   ```bash
   source /opt/ros/$ROS_DISTRO/setup.bash
