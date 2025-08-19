@@ -11,6 +11,9 @@
 // Include Zenoh C++ API
 #include <zenoh.hxx>
 
+// Include args parser
+#include "../getargs.hxx"
+
 // Include the message types you need
 #include "PointCloud2.hpp"
 #include "TFMessage.hpp"
@@ -33,8 +36,10 @@ int main(int argc, char **argv)
 
     std::cout << "Zenoh Bridge Subscriber Example" << std::endl;
 
-    // Initialize Zenoh session with a default configuration
-    zenoh::Config config = zenoh::Config::create_default();
+    // Parse the arguments
+    auto &&[config, args] = ConfigCliArgParser(argc, argv).run();
+
+    // Initialize Zenoh session with the provided configuration
     auto session = zenoh::Session::open(std::move(config));
 
     // Subscribe to /tf
