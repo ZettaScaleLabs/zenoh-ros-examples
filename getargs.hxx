@@ -342,7 +342,8 @@ class ConfigCliArgParser : public CliArgParser {
 #endif
 
 #ifdef ZENOHCXX_ZENOHC
-        named_value({"m", "mode"}, "MODE", "Zenoh session mode (peer | client)", "peer");
+        // We use client as a default mode in the examples
+        named_value({"m", "mode"}, "MODE", "Zenoh session mode (peer | client)", "client");
 #elif defined(ZENOHCXX_ZENOHPICO)
         named_value({"m", "mode"}, "MODE", "Zenoh session mode (peer | client)", "client");
 #endif
