@@ -75,21 +75,32 @@ just clean
     ```
 
 * Run the subscriber
+  * Replace localhost with the IP that runs the bridge.
 
   ```bash
   # DON'T source ROS environment in the terminal to avoid CycloneDDS library conflict
-  ./bridge/build/zenoh_sub
+  ./bridge/build/zenoh_sub -e tcp/localhost:7447
   ```
 
 ### Using **`rmw_zenoh_cpp`**, subscribing directly
 
 * Run Zenoh router
+  * The configuration file for zenohd enables the ACL control.
 
   ```bash
   source /opt/ros/$ROS_DISTRO/setup.bash
   export RMW_IMPLEMENTATION=rmw_zenoh_cpp
   ros2 run rmw_zenoh_cpp rmw_zenohd
   ```
+
+  * You can also run the zenohd with the provided configuration that allows only the configured topics to be accessed externally:
+
+    ```bash
+    source /opt/ros/$ROS_DISTRO/setup.bash
+    export RMW_IMPLEMENTATION=rmw_zenoh_cpp
+    export ZENOH_ROUTER_CONFIG_URI=$PWD/rmw_zenoh/config/ROUTER_CONFIG.json5
+    ros2 run rmw_zenoh_cpp rmw_zenohd
+    ```
 
 * Run your ROS 2 program with `rmw_zenoh`
 
@@ -100,10 +111,9 @@ just clean
   ```
 
 * Run the subscriber
-  * You might need to update the connection IP of `rmw_zenohd` in the configuration file first.
-  * The path of the configuration file: `rmw_zenoh/config/zenoh-config.json5`
+  * Replace localhost with the IP that runs zenohd.
 
   ```bash
   # DON'T source ROS environment in the terminal to avoid CycloneDDS library conflict
-  ./rmw_zenoh/build/zenoh_sub ./rmw_zenoh/config/zenoh-config.json5
+  ./rmw_zenoh/build/zenoh_sub -e tcp/localhost:7447
   ```
