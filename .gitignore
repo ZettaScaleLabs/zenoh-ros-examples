@@ -1,2 +1,6 @@
+# Intermediate directories of the build results
 build
 install
+
+# IDE configuration files
+.vscode
