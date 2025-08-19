@@ -414,6 +414,7 @@
           "*/tf_static/**",
           "*/tf_static/**/@adv/**",  /// This is required to make transient local durability work
           "*/point_cloud/**",
+          /// The point cloud topic which is used in the turtlebot demo
           //"*/local_costmap/clearing_endpoints/**",
           /// We need this to make the ROS 2 discovery work
           "@ros2_lv/**",

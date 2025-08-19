@@ -76,8 +76,13 @@
       ////               or is not specified at all, it means that ALL such interface are allowed.
       allow: {
         /// Dexory setting: Customize the Zenoh configuration to enable access control in ROS 2 bridge.
-        publishers: ["/point_cloud", "/tf", "/tf_static"],
-        //publishers: ["/local_costmap/clearing_endpoints", "/tf", "/tf_static"],
+        publishers: [
+          "/point_cloud",
+          /// The point cloud topic which is used in the turtlebot demo
+          //"/local_costmap/clearing_endpoints"
+          "/tf",
+          "/tf_static"
+        ],
         //subscribers: [".*/cmd_vel"],
         //service_servers: [".*/.*_parameters"],
         //service_clients: [],
