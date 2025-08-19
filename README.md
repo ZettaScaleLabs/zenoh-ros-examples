@@ -21,7 +21,7 @@ Install zenoh-c, zenoh-cpp and zenoh-bridge-ros2dds:
 
 ```bash
 curl -L https://download.eclipse.org/zenoh/debian-repo/zenoh-public-key | sudo gpg --dearmor --yes --output /etc/apt/keyrings/zenoh-public-key.gpg
-echo "deb [trusted=yes] https://download.eclipse.org/zenoh/debian-repo/ /" | sudo tee -a /etc/apt/sources.list > /dev/null
+echo "deb [signed-by=/etc/apt/keyrings/zenoh-public-key.gpg] https://download.eclipse.org/zenoh/debian-repo/ /" | sudo tee /etc/apt/sources.list.d/zenoh.list > /dev/null
 sudo apt update
 sudo apt install libzenohc-dev libzenohcpp-dev zenoh-bridge-ros2dds
 ```
@@ -68,7 +68,7 @@ just clean
   zenoh-bridge-ros2dds
   ```
 
-  - You can also run the bridge with the provided configuration that allows only the configured topics to be routed to Zenoh:
+  * You can also run the bridge with the provided configuration that allows only the configured topics to be routed to Zenoh:
 
     ```bash
     zenoh-bridge-ros2dds -c bridge/config/bridge-config.json5
