@@ -22,10 +22,13 @@ message(STATUS, "IDLC: ${IDLC}")
 
 # IDL code generation
 find_package(CycloneDDS-CXX REQUIRED)
-file(GLOB IDL_FILES ../idl/*.idl)
+file(GLOB IDL_FILES ../common/idl/*.idl)
 message(STATUS "IDL files found: ${IDL_FILES}")
 idlcxx_generate(TARGET IdlGenerated_lib FILES ${IDL_FILES} WARNINGS no-implicit-extensibility)
 include_directories(${CMAKE_BINARY_DIR})
+
+# Include the common directory for shared code
+include_directories(../common)
 
 # Build
 add_executable(zenoh_sub zenoh_sub.cxx)

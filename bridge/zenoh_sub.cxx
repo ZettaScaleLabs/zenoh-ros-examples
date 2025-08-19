@@ -12,7 +12,7 @@
 #include <zenoh.hxx>
 
 // Include args parser
-#include "../getargs.hxx"
+#include "getargs.hxx"
 
 // Include the message types you need
 #include "PointCloud2.hpp"
