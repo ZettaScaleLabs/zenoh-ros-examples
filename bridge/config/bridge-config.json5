@@ -79,7 +79,7 @@
         publishers: [
           "/point_cloud",
           /// The point cloud topic which is used in the turtlebot demo
-          //"/local_costmap/clearing_endpoints"
+          //"/local_costmap/clearing_endpoints",
           "/tf",
           "/tf_static"
         ],
