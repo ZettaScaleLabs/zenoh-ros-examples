@@ -71,7 +71,7 @@ just clean
   * You can also run the bridge with the provided configuration that allows only the configured topics to be routed to Zenoh:
 
     ```bash
-    zenoh-bridge-ros2dds -c bridge/config/bridge-config.json5
+    zenoh-bridge-ros2dds -c bridge_sub/config/bridge-config.json5
     ```
 
 * Run the subscriber
@@ -97,7 +97,7 @@ just clean
     ```bash
     source /opt/ros/$ROS_DISTRO/setup.bash
     export RMW_IMPLEMENTATION=rmw_zenoh_cpp
-    export ZENOH_ROUTER_CONFIG_URI=$PWD/rmw_zenoh/config/ROUTER_CONFIG.json5
+    export ZENOH_ROUTER_CONFIG_URI=$PWD/rmw_zenoh_sub/config/ROUTER_CONFIG.json5
     ros2 run rmw_zenoh_cpp rmw_zenohd
     ```
 

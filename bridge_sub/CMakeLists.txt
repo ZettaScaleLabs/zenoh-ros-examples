@@ -10,6 +10,10 @@ project(zenoh_ros_bridge_cpp_example
         VERSION 0.1.0
         LANGUAGES CXX)
 
+# Don't remove RPATH while install binaries
+set(CMAKE_SKIP_INSTALL_RPATH FALSE)
+set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
+
 # Add Zenoh libraries
 find_package(zenohc REQUIRED)
 find_package(zenohcxx REQUIRED)
