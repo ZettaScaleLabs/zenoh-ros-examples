@@ -2,7 +2,7 @@
 
 This repository shows two examples of native Zenoh applications subscribing to ROS 2 publications, depending the `RMW_IMPLEMENTATION` which is used.
 
-* If you're using **`rmw_cylonedds_cpp`**: the [**`bridge`**](./bridge/) directory contains an example of a C++ Zenoh application subcribing to ROS 2 Publishers through the [zenoh-bridge-ros2dds](https://github.com/eclipse-zenoh/zenoh-plugin-ros2dds)
+* If you're using **`rmw_cylonedds_cpp`**: the [**`bridge`**](./bridge/) directory contains an example of a C++ Zenoh application subcribing to ROS 2 Publishers through the [zenoh-bridge-ros2dds](https://github.com/eclipse-zenoh/zenoh-plugin-ros2dds) (v1.5.1 minimum).
 * If you're using **`rmw_zenoh_cpp`**: the [**`rmw_zenoh`**](./rmw_zenoh/) directory contains an example of a C++ Zenoh application subcribing directly to ROS 2 Publishers, without any intermediary.
 
 Both examples subscribing to those ROS topics and using CycloneDDS' CDR library to deserialize the data:
