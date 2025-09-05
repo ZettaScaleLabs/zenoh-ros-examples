@@ -31,5 +31,8 @@ include_directories(${CMAKE_BINARY_DIR})
 include_directories(../common)
 
 # Build
-add_executable(zenoh_sub zenoh_sub.cxx)
-target_link_libraries(zenoh_sub PRIVATE zenohc::lib zenohcxx::zenohc CycloneDDS-CXX::ddscxx IdlGenerated_lib)
+add_executable(bridge_sub bridge_sub.cxx)
+target_link_libraries(bridge_sub PRIVATE zenohc::lib zenohcxx::zenohc CycloneDDS-CXX::ddscxx IdlGenerated_lib)
+
+# Install
+install(TARGETS bridge_sub DESTINATION bin)

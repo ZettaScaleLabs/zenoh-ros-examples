@@ -1,4 +1,4 @@
-all: prepare cyclonedds cyclonedds-cxx zenoh-bridge-examples zenoh-rmw-examples
+all: prepare cyclonedds cyclonedds-cxx bridge_sub rmw_zenoh_sub
 
 # Initialize git submodules
 prepare:
@@ -22,28 +22,30 @@ cyclonedds-cxx: cyclonedds
 		cmake --build . && \
 		cmake --build . --target install
 
-# Build the zenoh-bridge-examples with the path of CycloneDDS and the idlc
-zenoh-bridge-examples:
-	mkdir -p bridge/build
+# Build the bridge_sub examples with the path of CycloneDDS and the idlc
+bridge_sub:
+	mkdir -p bridge_sub/build
 	# Use the idlc we built
 	export PATH=$(pwd)/cyclonedds/install/bin:$PATH && \
-	cd bridge/build && \
-		cmake -DCMAKE_PREFIX_PATH=../install .. && \
-		cmake --build .
+	cd bridge_sub/build && \
+		cmake -DCMAKE_INSTALL_PREFIX=../../install -DCMAKE_PREFIX_PATH=../install .. && \
+		cmake --build . && \
+		cmake --build . --target install
 
-# Build the rmw_zenoh examples with the path of CycloneDDS and the idlc
-zenoh-rmw-examples:
-	mkdir -p rmw_zenoh/build
+# Build the rmw_zenoh_sub examples with the path of CycloneDDS and the idlc
+rmw_zenoh_sub:
+	mkdir -p rmw_zenoh_sub/build
 	# Use the idlc we built
 	export PATH=$(pwd)/cyclonedds/install/bin:$PATH && \
-	cd rmw_zenoh/build && \
-		cmake -DCMAKE_PREFIX_PATH=../install .. && \
-		cmake --build .
+	cd rmw_zenoh_sub/build && \
+		cmake -DCMAKE_INSTALL_PREFIX=../../install -DCMAKE_PREFIX_PATH=../install .. && \
+		cmake --build . && \
+		cmake --build . --target install
 
 # Clean the build folder
 clean:
-	rm -rf bridge/build
-	rm -rf rmw_zenoh/build
+	rm -rf bridge_sub/build
+	rm -rf rmw_zenoh_sub/build
 	rm -rf cyclonedds/build
 	rm -rf cyclonedds-cxx/build
 	rm -rf install

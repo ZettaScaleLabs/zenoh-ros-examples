@@ -40,8 +40,8 @@ just all
 just prepare               # Init submodule
 just cyclonedds            # Install CycloneDDS
 just cyclonedds-cxx        # Install CycloneDDS C++
-just zenoh-bridge-examples # Build the bridge example
-just zenoh-rmw-examples    # Build the rmw zenoh example
+just bridge_sub            # Build the bridge example
+just rmw_zenoh_sub         # Build the rmw zenoh example
 ```
 
 * Clean the whole project
@@ -79,7 +79,7 @@ just clean
 
   ```bash
   # DON'T source ROS environment in the terminal to avoid CycloneDDS library conflict
-  ./bridge/build/zenoh_sub -e tcp/localhost:7447
+  ./install/bin/bridge_sub -e tcp/localhost:7447
   ```
 
 ### Using **`rmw_zenoh_cpp`**, subscribing directly
@@ -114,5 +114,5 @@ just clean
 
   ```bash
   # DON'T source ROS environment in the terminal to avoid CycloneDDS library conflict
-  ./rmw_zenoh/build/zenoh_sub -e tcp/localhost:7447
+  ./install/bin/rmw_zenoh_sub -e tcp/localhost:7447
   ```
