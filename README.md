@@ -11,6 +11,16 @@ Both examples subscribing to those ROS topics and using CycloneDDS' CDR library 
 * `/tf_static`: [tf2_msgs/msg/TFMessage](https://github.com/ros2/geometry2/blob/rolling/tf2_msgs/msg/TFMessage.msg)
 * `/point_cloud`: [sensor_msgs/msg/PointCloud2](https://github.com/ros2/common_interfaces/blob/rolling/sensor_msgs/msg/PointCloud2.msg)
 
+## Acknowledment
+
+This work is sponsored by  
+
+<p align="left">
+  <a href="https://www.dexory.com/">
+    <img height="50" src="images/Dexory_logo.png" alt="Dexory"/>
+  </a>
+</p>
+
 ## Prerequisite
 
 > [!WARNING]
