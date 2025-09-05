@@ -28,6 +28,21 @@ sudo apt install libzenohc-dev libzenohcpp-dev zenoh-bridge-ros2dds
 
 ## Build the project
 
+### In a Docker image
+
+You can build a Linux-based image from the [Dockerfile](./Dockerfile) and run the examples in a container. For instance, run:
+
+```bash
+# Build the image
+docker build -t zenoh-ros-examples .
+# Run the container
+docker run --init -it zenoh-ros-examples
+```
+
+The examples are installed in `/workspace/install/bin` directory, which is also included in `$PATH`.
+
+### On your host
+
 We are using [just](https://github.com/casey/just) to simplify the command.
 You can install it via `sudo apt install just`.
 
@@ -75,7 +90,7 @@ just clean
     ```
 
 * Run the subscriber
-  * Replace localhost with the IP that runs the bridge.
+  * Replace `localhost` with the IP that runs the bridge, or with `host.docker.internal` if you run the example in a Docker container and the bridge runs on the host.
 
   ```bash
   # DON'T source ROS environment in the terminal to avoid CycloneDDS library conflict
@@ -110,7 +125,7 @@ just clean
   ```
 
 * Run the subscriber
-  * Replace localhost with the IP that runs zenohd.
+  * Replace `localhost` with the IP that runs `rmw_zenohd`, or with `host.docker.internal` if you run the example in a Docker container and `rmw_zenohd` runs on the host.
 
   ```bash
   # DON'T source ROS environment in the terminal to avoid CycloneDDS library conflict
